@@ -2,9 +2,12 @@
 
 isPresent=1
 number1=$(( RANDOM%2 ))
-if [ $isPresent -eq $number1 ]
+if	[ $isPresent -eq $number1 ]
 then
-	echo "Employee is Present"
+	empRatePerHr=20
+	empHrs=8
+	salary=$(($empHrs*empRatePerHr))
+
 else
-	echo "Employee is Abscent"
+	salary=0		
 fi
