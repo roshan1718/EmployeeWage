@@ -1,7 +1,6 @@
 #!/bin/bash -x
 
 #CONSTANT FOR THE PROGRAM
-
 isPartTime=1
 isFullTime=2
 maxHrsInMonth=4
