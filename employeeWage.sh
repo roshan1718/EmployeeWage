@@ -1,23 +1,23 @@
 #!/bin/bash -x
 
 #CONSTANT FOR THE PROGRAM
-isPartTime=1
-isFullTime=2
-maxHrsInMonth=4
-empRatePerHr=20
-numWorkingDays=20
+IS_PART_TIME=1
+IS_FULL_TIME=2
+MAX_HRS_IN_MONTH=4
+EMP_RATE_PER_HR=20
+NUM_WORKING_DAYS=20
 
 #VARIABLES
-totalEmpHr=0
+totalWorkHours=0
 totalWorkingDays=0
 
 function getWorkingHours()
 {
 	case $1 in
-		$isFullTime)
+		$IS_FULL_TIME)
 			workHours=8 ;;
 
-		$isPartTime)
+		$IS_PART_TIME)
 			workHours=4 ;;
 
 		*)
@@ -26,13 +26,22 @@ function getWorkingHours()
 	echo $workHours
 
 }
+function calcDailyWage()
+{
+	local workHrs=$1
+	wage=$(($workHrs*$EMP_RATE_PER_HR))
+	echo $wage
+}
 
-while [[ $totalWorkHours -lt $maxHrsInMonth && 
-			$totalWorkingDays -lt $numWorkingDays ]]
+while [[ $totalWorkHours -lt $MAX_HRS_IN_MONTH && 
+			$totalWorkingDays -lt $NUM_WORKING_DAYS ]]
 do
 	((totalWorkingDays++))
 	workHours="$( getWorkingHours $((RANDOM%3)) )"
 	totalWorkHours=$(( $totalWorkHours + $workHours ))
+	empDailyWage[$totalWorkingDays]="$( calcDailyWage $workHours )"
+
 done
 
-totalSalary=$(($totalWorkHours*$empRatePerHr))
+totalSalary="$(($calcDailyWage $totalWorkHours))"
+echo "Daily Wage " ${empDailyWage[@]}
